@@ -43,18 +43,72 @@ CREATE TABLE demoTable2 (
   PRIMARY KEY (id, name)
 );
 
+CREATE TABLE tableA (
+  name VARCHAR(50),
+  age INT NOT NULL
+);
+
+CREATE TABLE tableB (
+  name VARCHAR(50),
+  age INT NOT NULL
+);
+
+
+-- Foreign Key
+CREATE TABLE dept (
+  id INT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE teacher (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  dept_id INT,
+  FOREIGN KEY (dept_id) REFERENCES dept(id)
+  ON UPDATE CASCADE        -- help to update the changes done in dept or teacher
+  ON DELETE CASCADE        -- help t o delete the chnages done in dept or teacher
+);
+
+
+-- Table related queries
+-- ADD COLUMN
+-- MODIFY       -> to modify the datatypes of the column
+-- CHANGE       -> change the name of the column
+-- DROP COLUMN
+-- REMANCE TO
+ALTER TABLE demoTable1 ADD COLUMN phone_number INT DEFAULT 55555;
+ALTER TABLE demoTable1 MODIFY COLUMN phone_number VARCHAR(10) DEFAULT 55555;
+ALTER TABLE demoTable1 CHANGE phone_number contact_no INT DEFAULT 55555;
+-- ALTER TABLE demoTable1 RENAME TO demo;
+-- ALTER TABLE demoTable1 DROP COLUMN phone_number;
+
 
 -- inserting things in the table
-INSERT INTO demoTable1 VALUES (1, "Tanish", 20);
-INSERT INTO demoTable1 VALUES (2, "Pratyush", 17);
+INSERT INTO demoTable1 VALUES (1, "Tanish", 20, 99999);
+INSERT INTO demoTable1 (id, name, age) VALUES (2, "Pratyush", 17);
 
-INSERT INTO demoTable2 VALUES (1, 'Tanish', 'Gurgaon', 100);
+INSERT INTO demoTable2 VALUES (1, 'Tanish', 'Gurgaon', 95);
 INSERT INTO demoTable2 VALUES (1, 'Pratyush', 'Noida', 76);
-INSERT INTO demoTable2 VALUES (2, 'Pratyush', 'Delhi', 50);
-INSERT INTO demoTable2 VALUES (3, 'Ram', 'Banglore', 100);
+INSERT INTO demoTable2 VALUES (2, 'Pratyush', 'Delhi', 30);
+INSERT INTO demoTable2 VALUES (3, 'Ram', 'Gurgaon', 100);
+
+INSERT INTO dept VALUES (101, 'English');
+INSERT INTO dept VALUES (102, 'IT');
+
+INSERT INTO teacher VALUES (101, 'Baburao', 101);
+INSERT INTO teacher VALUES (102, 'Raju', 102);
+INSERT INTO teacher VALUES (103, 'Ghanshyam', 102);
+
+INSERT INTO tableA VALUES ("Ram", 20);
+INSERT INTO tableA VALUES ("Shyam", 26);
+INSERT INTO tableA VALUES ("Rahul", 75);
+
+INSERT INTO tableB VALUES ("Tanish", 20);
+INSERT INTO tableB VALUES ("Pratyush", 17);
 
 
--- printing 
+
+-- printing
 SELECT * FROM demoTable1;
 SELECT * FROM demoTable2;
 
@@ -82,9 +136,49 @@ SELECT AVG(marks) from demoTable2;
 SELECT city, COUNT(name) FROM demoTable2 GROUP BY city;
 
 
--- Having clause
+-- Having clause (similar to WHERE)
 SELECT city, count(name) FROM demoTable2 GROUP BY city HAVING MAX(marks) > 50;
 
+
+-- General Order
+-- SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY
+
+
+-- Updates in table
+UPDATE demoTable2 SET marks = 95 WHERE name = "Tanish";
+
+
+-- Delete things from table
+DELETE FROM demoTable2 WHERE marks = 49; 
+
+
+-- SELECT * FROM demoTable1;
+SELECT * FROM demoTable2;
+
+
+-- Foreign keys task
+SELECT * FROM dept;
+SELECT * FROM teacher;
+
+UPDATE dept SET name = "Computer Science" WHERE id = 102;
+
+SELECT * FROM dept;
+SELECT * FROM teacher;
+
+
+-- Joining Table
+-- INNER JOIN
+-- LEFT JOIN
+-- RIGHT JOIN
+SELECT * FROM tableA as A INNER JOIN tableB as B ON A.age = B.age;
+-- FULL JOIN
+SELECT * FROM tableA as A LEFT JOIN tableB as B ON A.age = B.age
+UNION
+SELECT * FROM tableA as A RIGHT JOIN tableB as B ON A.age = B.age;
+
+
+-- Joining two queries
+SELECT name, marks FROM demoTable2 WHERE marks > (SELECT AVG(marks) FROM demoTable2);
 
 -- deleting the database
 -- DROP DATABASE IF EXISTS demoTable1;
