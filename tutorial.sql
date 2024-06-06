@@ -4,15 +4,6 @@
 -- after creating, we have to use it
 -- USE demoDatabase;
 
-
--- creating the table
-CREATE TABLE demoTable1 (
-  id INT PRIMARY KEY,   -- primary key means unique value and not null
-  name VARCHAR(50),
-  age INT NOT NULL
-);
-
-
 -- Datatypes
 -- CHAR 
 -- VARCHAR
@@ -33,6 +24,13 @@ CREATE TABLE demoTable1 (
 -- NOT NULL
 -- UNIQUE
 
+
+-- creating the table
+CREATE TABLE demoTable1 (
+  id INT PRIMARY KEY,   -- primary key means unique value and not null
+  name VARCHAR(50),
+  age INT NOT NULL
+);
 
 -- how to make two column pair a single primary key 
 CREATE TABLE demoTable2 (
@@ -105,7 +103,6 @@ INSERT INTO tableA VALUES ("Rahul", 75);
 
 INSERT INTO tableB VALUES ("Tanish", 20);
 INSERT INTO tableB VALUES ("Pratyush", 17);
-
 
 
 -- printing
